@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>원의 n분점을 연결하는 직선 그리기</title>
+    <script>
+        document.getElementById("many").onclick = function() {
+            var n = parseInt(document.getElementById("many".value));
+            function diamond(c, n, x, y, r, color) {
+                var p = generatePoints(n, x, y, r);
+                c.strokeStyle = color;
+                c.beginPath();
+                for (var i = 0; i < n; i++) {
+                    for(var j = i + 1; j < n; j++) {
+                      c.moveTo(p[i].x, p[i].y);
+                     c.lineTo(p[i].x, p[i].y);
+                    }
+                }
+                c.stroke();
+            }
+            function generatePoints(n, x, y, r) {
+                var points = [];
+                for (var i = 0; i < n; i++) {
+                    var t = i * 2 * Math.PI / n;
+                    points[i] = {
+                        x: x + r * Math.cos(t),
+                        y: y + r * Math.sin(t)
+                    };
+                }
+                return points;
+            }
+        }
+    </script>
+</head>
+<body>
+    <p>꼭짓점의 개수는?<input type="number" id = "many"></p>
+    <input type="button" id= "button" value="계산">
+    <canvas id="mycanvas" width="1000" height="400"></canvas>
+</body>
+</html>
