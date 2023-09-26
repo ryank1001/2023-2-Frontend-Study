@@ -328,3 +328,118 @@ compose는 인수로 받은 함수를 순차적으로 합성한다.
      명시적으로 프로토타입을 지정해서 객체를 생성할 수 있다.
      첫번째 인수는 프로토타입, 두번째 인수는 객체의 프로퍼티 (선택사항) 이다.
      
+
+### 접근자 프로퍼티
+
+객체의 프로퍼티는 두가지로 나눌 수 있다.
+1. 데이터 프로퍼티 : 값을 저장하기 위한 프로퍼티
+2. 접근자 프로퍼티 : 값이 없으며 프로퍼티를 읽거나 쓸 때 호출하는 함수를 대신 지정가능한 프로퍼티
+
+접근자 : 객체가 가진 프로퍼티 값을 객체 바깥에서 읽거나 쓸 수 있도록 제공하는 메서드
+         특정 데이터를 외부로부터 숨기고 데이터 읽으려는 시도가 있을 때 적절한 값으로 가공해서 넘길 수 있다.
+
+         프로퍼티를 읽을 때의 처리를 담당하는 __게터 함수__ : 인수 O
+                    쓸 때의 처리를 담당하는 __세터 함수__ : 인수 X
+         접근자 프로퍼티에 getter와 setter를 정의하려면 function 대신 set이나 get 사용
+
+         게터가 없는 프로퍼티 값을 읽으려고 하면 undefined 반환
+
+
+## 프로퍼티의 속성
+  1. 쓰기 가능 : true 라면 프로퍼티 값을 수정할 수 있다
+  2. 열거 가능 : for/in 문이나 Object.keys등의 반복문으로 찾을 수 있는 대상인지를 확인
+  3. 재정의 가능 : 프로퍼티의 내부 속성을 수정할 수 있는지 확인한다
+
+ - 프로퍼티 디스크립터 : 프로퍼티의 속성값 = 프로퍼티의 속성 이름
+ - 프로퍼티 디스크립터 가져오기 : Object.getOwnPropertyDescriptor (객체의 참조, 프로퍼티 이름)
+ - 객체의 프로퍼티 설정하기 : Object.defineProperty (객체의 참조, 프로퍼티 이름, 디스크립터의 참조)
+ - 프로퍼티 속성 한꺼번에 설정하기 : Object.defineProperties
+
+
+## 프로퍼티의 확인
+
+### in 연산자
+객체 안에 지명한 프로퍼티가 있는지 검사하며, 검색 대상은 객체가 소유한 프로퍼티와 상속 받은 프로퍼티
+
+### hasOwnProperty
+지명한 프로퍼티가 소유한 객체의 프로퍼티면 true
+
+### propertyIsEnumerable
+지명한 프로퍼티가 소유한 객체의 프로퍼티이고 열거 가능하면 true
+
+
+## 프로퍼티의 열거
+
+### for/in
+: 객체의 프로토타입 체인에서 열거할 수 있는 프로퍼티를 찾아내어 꺼내는 반복문
+> var person1 = {name: "Tom", age:17};
+> var person2 = Object.create(person1);
+> person2.name = "Huck";
+> for(var p in person2) console.log(p);
+
+요소 열거
+> var a = [0, 2, 4, 6, 8]
+> a.name = "evens";
+> for(var i in a) console.log(i);
+
+### Object.keys
+지정한 객체가 소유한 프로퍼티 열거할 수 있는 프로퍼티 이름만 배열로 만든다
+> var group = { groupName: "Tennis circle" };
+> var person = Object.create(group);
+> person.name = "Tom";
+> person.age = 17;
+> person.sayHello = function() {console.log("Hello" + this.name);};
+> Object.defineProperty(person,"sayHello",{enumerable: false});
+> console.log(Object.keys(person)); // ["name", "age"]
+
+
+## 객체 잠그기
+### 확장 방지 : Object.preventExtension
+인수로 받은 객체를 확장할 수 없게 만든다
+### 밀봉 : Object.seal
+인수로 받은 객체를 밀봉한다 --> 추가 삭제 수정은 불가, 읽기 쓰기는 가능
+### 동결 : Object.freeze
+인수로 받은 객체를 동결한다 --> 기존의 프로퍼티를 재정의 불가능, 읽기만 가능
+
+
+## Mixin
+특정 객체에 다른 객체가 가지고 있는 프로퍼티를 붙여 뒤섞는 기법
+
+## JSON
+자바스크립트 객체를 문자열로 표현하는 데이터 포맷으로 객체를 직렬화한다.
+문자열로 전환한다는 거임
+> {name: "Tom", age: 17, marriage: false, data:[2, 5, null]};
+> '{"name": "Tom", "age": 17, "marriage": false, "data":[2, 5, null]}'
+
+### JSON의 변환과 환원
+- 자바스크립트 객체를 JSON 문자열로 변환하기: JSON.stringify
+> JSON.stringify(value[, replacer[, space]])
+
+- JSON 문자열을 자바스크립트 객체로 환원하기: JSON,parse
+> JSON.parse(text[, reviver])
+
+
+## 배열
+Array.prototype의 메서드 목록
+
+### 수정 메서드
+- push 메서드 : 요소 추가하기
+> var a = ["A", "B", "C"];
+> a.push("D"); // A B C D
+
+- pop 메서드 : 마지막 요소 뽑기
+> var a = ["A", "B", "C:];
+> a.pop(); // 반환 C, 배열에서 C 삭제
+
+- shift 메서드 : 왼쪽으로 한칸 밀기
+> a.shift(); // 반환값 A 배열에서 A 삭제
+
+- unshift 메서드 : 오른쪽으로 한칸 밀기
+> a.unshift();
+
+- splice 메서드 : 배열 갈아끼기
+첫번째 인수 : 배열 수정을 시작할 위치
+두번째 인수 : 배열 수정을 할 개수
+세번째 인수 : 삽입할 요소를 쉼표로 구분해서 넘긴다
+
+- sort 메서드 : 
