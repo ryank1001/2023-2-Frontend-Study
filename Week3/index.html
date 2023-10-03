@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>To Do List C335127</title>
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <div class="main_canvas">
+            <div id="main_container">
+                <h1>Things to do</h1>
+                <form id="input_to_do_form" action="">
+                    <input id="input_to_do_text" type="text" placeholder="📍Enter your to-do" />
+                    <button id="button" onclick="addTodoList()">+</button>
+                </form>
+                <div id="list_container">
+                    <h2>📂 to do</h2>
+                    <ul id="todo_list"></ul>
+                </div>
+                <div id="list_container">
+                    <h2>🗑 done</h2>
+                    <ul id="done_list"></ul>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script src="script.js"></script>
+</html>
