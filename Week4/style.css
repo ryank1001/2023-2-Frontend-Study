@@ -49,7 +49,7 @@ button.number {
 }
 
 button.zero {
-    width: 287px;
+    width: 187px;
     border-radius: 40px;
 }
 
@@ -68,6 +68,10 @@ button.equals {
     background: #2F9D27;
     color: #FFFFFF;
     font-size: 50px;
+}
+
+button.sign {
+    width: 80px;
 }
 
 

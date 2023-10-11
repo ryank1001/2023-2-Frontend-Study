@@ -35,6 +35,8 @@ document.addEventListener('DOMContentLoaded', function() {
             case '÷':
                 currentNumber = previousNumber / currentNumber;
                 break;
+            case '+/-':
+                currentNumber = previousNumber * -1;
             default:
                 return;
         }
